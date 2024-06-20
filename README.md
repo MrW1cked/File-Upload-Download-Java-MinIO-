@@ -47,7 +47,7 @@ minio.url=http://localhost:9000
 mvn clean install
 ```
 
-### 44️⃣. Run the Application
+### 4️⃣. Run the Application
 ```bash
 mvn spring-boot:run
 ```
@@ -55,6 +55,7 @@ mvn spring-boot:run
 ### 5️⃣. Access the Application:
 
 Open a web browser and go to http://localhost:9998
+Inside the resources there is a html file for the upload / download. Use it away!
 
 ## 📜License
 
