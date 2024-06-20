@@ -31,6 +31,34 @@ Each Method calls a Method into the Service class.
 ```bash
 git clone https://github.com/your-username/file-upload-download.git
 cd file-upload-download
-
+```
 ### 2. Configure MinIO
 
+Use the file .env to store this variables:
+```bash
+minio.access.name=your-access-key
+minio.access.secret=your-secret-key
+minio.bucket.name=your-bucket-name
+minio.url=http://localhost:9000
+```
+
+### 3. Build the Project
+```bash
+mvn clean install
+```
+
+### 4. Run the Application
+```bash
+mvn spring-boot:run
+```
+
+### 5. Access the Application:
+
+Open a web browser and go to http://localhost:9998
+
+## License
+
+This project is licensed under the MIT License. See the LICENSE file for details.
+
+## Contact
+If you have any questions or suggestions, please feel free to contact me at nunofvsousa@gmail.com
