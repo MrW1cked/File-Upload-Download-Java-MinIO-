@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>File Upload and Download</title>
+    <script>
+        async function uploadFile(event) {
+            event.preventDefault();
+            const formData = new FormData(document.getElementById('uploadForm'));
+            const response = await fetch('http://localhost:9998/api/v1/file/upload', {
+                method: 'POST',
+                body: formData
+            });
+            const result = await response.text();
+            alert(result);
+        }
+
+        async function downloadFile() {
+            const fileId = document.getElementById('fileId').value;
+            if (!fileId) {
+                alert('Please enter a file ID.');
+                return;
+            }
+            const response = await fetch(`http://localhost:9998/api/v1/file/download/${fileId}`, {
+                method: 'GET'
+            });
+
+            if (response.status === 200) {
+                const blob = await response.blob();
+                const contentDisposition = response.headers.get('Content-Disposition');
+                const fileName = contentDisposition ? contentDisposition.split('filename=')[1].replace(/"/g, '') : 'downloaded_file';
+                const url = window.URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = fileName;
+                document.body.appendChild(a);
+                a.click();
+                a.remove();
+                window.URL.revokeObjectURL(url);
+            } else {
+                alert('File not found or an error occurred.');
+            }
+        }
+    </script>
+</head>
+<body>
+<h1>File Upload and Download</h1>
+
+<!-- Form for uploading files -->
+<form id="uploadForm" onsubmit="uploadFile(event)">
+    <label for="file">Choose PDF file to upload (max 25MB):</label>
+    <input type="file" id="file" name="file" accept="application/pdf" required>
+    <button type="submit">Upload</button>
+</form>
+
+<h2>Download File</h2>
+<label for="fileId">Enter file ID to download:</label>
+<input type="text" id="fileId" name="fileId">
+<button type="button" onclick="downloadFile()">Download</button>
+</body>
+</html>
